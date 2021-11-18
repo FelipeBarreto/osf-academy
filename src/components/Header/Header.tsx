@@ -1,6 +1,6 @@
 import * as S from "./Header.styles";
 import Logo from "assets/images/logo.png";
-import { ResponsiveContainer } from "styles/global";
+import { ResponsiveContainer } from "components/ui";
 
 const Header = () => {
   return (

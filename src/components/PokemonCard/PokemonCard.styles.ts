@@ -1,13 +1,12 @@
 import styled from "styled-components/macro";
-import Card from "components/Card";
+import { Card } from "components/ui";
 
 export const PokemonCard = styled(Card)({
-  minWidth: "200px",
+  minWidth: "250px",
   flexGrow: "1",
   flexBasis: "1px",
-  height: "300px",
+  height: "250px",
   color: "red",
-
   display: "flex",
   alignItems: "center",
   justifyContent: "center",

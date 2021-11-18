@@ -1,51 +1,41 @@
+import Modal from "components/Modal";
 import PokemonCard from "components/PokemonCard";
-import { useEffect, useState } from "react";
-import { EmptySlot, FlexContainer } from "styles/global";
-
-const pokemons = Array.from(Array(11)).fill("PokemonCard");
-
-const calcEmptyCard = (dataCount: number, container: HTMLElement | null) => {
-  const containerWidth = container?.getBoundingClientRect().width || 0;
-  const getGapCount = (currentCount: number): number => {
-    if (containerWidth > (currentCount + 1) * 40 + (currentCount + 2) * 224) {
-      return getGapCount(currentCount + 1);
-    }
-    return currentCount;
-  };
-
-  const gapCount = getGapCount(0);
-  const maxElementsPerRow = gapCount + 1;
-
-  if (dataCount % maxElementsPerRow === 0) {
-    return 0;
-  }
-  return maxElementsPerRow - (dataCount % maxElementsPerRow);
-};
+import { Button, FlexContainer } from "components/ui";
+import useEmptyCells from "hooks/useEmptyCells";
+import { useState } from "react";
 
 const Home = () => {
-  const [emptyCardCount, setEmptyCardCount] = useState(0);
+  const [pokemons, setPokemons] = useState([
+    "Pokemon1",
+    "Pokemon2",
+    "Pokemon3",
+    "Pokemon4",
+  ]);
 
-  useEffect(() => {
-    setEmptyCardCount(
-      calcEmptyCard(pokemons.length, document.getElementById("pokemon-grid"))
-    );
-    const resizeListener = () =>
-      setEmptyCardCount(
-        calcEmptyCard(pokemons.length, document.getElementById("pokemon-grid"))
-      );
-    window.addEventListener("resize", resizeListener);
-    return () => window.removeEventListener("resize", resizeListener);
-  }, []);
+  const [openPokemonModal, setOpenPokemonModal] = useState(false);
+
+  const emptyCells = useEmptyCells({
+    dataLength: pokemons.length,
+    cellMinWidth: 250,
+    cellPadding: 12,
+    gap: 40,
+    containerId: "pokemon-grid",
+  });
 
   return (
-    <FlexContainer gap="40px" id="pokemon-grid">
-      {pokemons.map((pokemon, i) => (
-        <PokemonCard key={i}>{pokemon}</PokemonCard>
-      ))}
-      {Array.from(Array(emptyCardCount)).map((_, index) => (
-        <EmptySlot key={index} padding="12px" />
-      ))}
-    </FlexContainer>
+    <>
+      <FlexContainer justifyContent="flex-end" marginBottom="20px">
+        <Button onClick={() => setOpenPokemonModal(true)}>Adicionar</Button>
+      </FlexContainer>
+      {pokemons.length === 0 && <p>Você ainda não possui pokemons.</p>}
+      <FlexContainer gap="40px" id="pokemon-grid">
+        {pokemons.map((pokemon, i) => (
+          <PokemonCard key={i}>{pokemon}</PokemonCard>
+        ))}
+        {emptyCells}
+      </FlexContainer>
+      <Modal open={openPokemonModal} />
+    </>
   );
 };
 

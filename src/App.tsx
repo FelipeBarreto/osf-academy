@@ -1,7 +1,7 @@
 import Header from "components/Header";
+import { ResponsiveContainer } from "components/ui";
 import Home from "pages/Home";
 import { ThemeProvider } from "styled-components";
-import { ResponsiveContainer } from "styles/global";
 import breakpoints from "styles/breakpoints";
 import { colors } from "styles/colors";
 
