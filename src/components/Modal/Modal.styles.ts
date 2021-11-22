@@ -2,7 +2,7 @@ import styled from "styled-components/macro";
 
 export const Modal = styled.div({
   backgroundColor: "#fff",
-  width: "400px",
+  minWidth: "400px",
   minHeight: "200px",
   borderRadius: "12px",
   display: "flex",
@@ -24,5 +24,10 @@ export const Backdrop = styled.div({
 });
 
 export const ModalTitle = styled.h2(({ theme }) => ({
+  display: "block",
+  width: "100%",
   color: theme.colors.primary,
+  borderBottom: `1px solid ${theme.colors.primary}`,
+  marginBottom: "12px",
+  paddingBottom: "4px",
 }));
