@@ -11,7 +11,7 @@ export const PokemonImageContainer = styled.div<{ hasImage: boolean }>(
   ({ theme, hasImage }) => ({
     margin: "12px 0",
     border: `1px solid ${theme.colors.gray}`,
-    width: "400px",
+    width: "100%",
     height: "200px",
     borderRadius: "5px",
     cursor: "pointer",
@@ -21,7 +21,11 @@ export const PokemonImageContainer = styled.div<{ hasImage: boolean }>(
     justifyContent: "center",
     padding: "8px",
 
-    img: {},
+    img: {
+      height: "160px",
+      width: "250px",
+      objectFit: "contain",
+    },
 
     ".overlay": {
       color: theme.colors.gray,
