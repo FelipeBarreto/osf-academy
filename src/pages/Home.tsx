@@ -1,11 +1,15 @@
+import { useState } from "react";
 import PokemonCard from "components/PokemonCard";
 import PokemonFormModal from "components/PokemonFormModal";
 import { Button, FlexContainer } from "components/ui";
 import useEmptyCells from "hooks/useEmptyCells";
-import { useState } from "react";
+import { Pokemon } from "types/Pokemon";
+import { usePokemonContext } from "contexts/PokemonContext";
+import { useNavigate } from "react-router";
 
 const Home = () => {
-  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+  const { pokemons, setPokemons } = usePokemonContext();
+  const navigate = useNavigate();
 
   const [openPokemonModal, setOpenPokemonModal] = useState(false);
 
@@ -27,11 +31,12 @@ const Home = () => {
       </FlexContainer>
       {pokemons.length === 0 && <p>Você ainda não possui pokemons.</p>}
       <FlexContainer gap="40px" id="pokemon-grid">
-        {pokemons.map((pokemon, i) => (
+        {pokemons.map((pokemon) => (
           <PokemonCard
-            key={i}
+            key={pokemon.id}
             pokemon={pokemon}
             removePokemon={() => removePokemon(pokemon)}
+            onClick={() => navigate(`/pokemon/${pokemon.id}`)}
           />
         ))}
         {emptyCells}

@@ -4,28 +4,22 @@ import { Button } from "components/ui";
 import { Pokemon } from "types/Pokemon";
 import TextArea from "components/TextArea";
 
-import * as S from "./PokemonFormModal.styles";
+import * as S from "./PokemonDetailsForm.styles";
 
-type PokemonFormModalProps = {
-  open: boolean;
-  onClose: () => void;
-  onPokemonCreated: (pokemon: Pokemon) => void;
+type PokemonDetailsFormProps = {
+  pokemon: Pokemon;
+  savePokemon: (pokemon: Pokemon) => void;
 };
 
-const PokemonFormModal: React.FC<PokemonFormModalProps> = ({
-  open,
-  onClose,
-  onPokemonCreated,
+const PokemonDetailsForm: React.FC<PokemonDetailsFormProps> = ({
+  pokemon,
+  savePokemon,
 }) => {
-  const [pokemonName, setPokemonName] = useState<string>("");
-  const [pokemonImage, setPokemonImage] = useState<string>("");
-  const [pokemonDescription, setPokemonDescription] = useState<string>("");
-
-  const handleClose = () => {
-    setPokemonName("");
-    setPokemonImage("");
-    onClose();
-  };
+  const [pokemonName, setPokemonName] = useState<string>(pokemon.name);
+  const [pokemonImage, setPokemonImage] = useState<string>(pokemon.image);
+  const [pokemonDescription, setPokemonDescription] = useState<string>(
+    pokemon.description
+  );
 
   const inputFileRef = useRef<HTMLInputElement>(null);
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,21 +34,16 @@ const PokemonFormModal: React.FC<PokemonFormModalProps> = ({
   };
 
   const handleSave = () => {
-    onPokemonCreated({
-      id: Math.random().toString(36).slice(2),
+    savePokemon({
+      id: pokemon.id,
       name: pokemonName,
       image: pokemonImage,
       description: pokemonDescription,
     });
-    handleClose();
   };
 
   return (
-    <S.PokemonFormModal
-      open={open}
-      onClose={handleClose}
-      title="Adicionar Pokémon"
-    >
+    <div>
       <Input
         value={pokemonName}
         onChange={(e) => setPokemonName(e.target.value)}
@@ -80,8 +69,8 @@ const PokemonFormModal: React.FC<PokemonFormModalProps> = ({
         onChange={(e) => setPokemonDescription(e.target.value)}
       />
       <Button onClick={handleSave}>Salvar</Button>
-    </S.PokemonFormModal>
+    </div>
   );
 };
 
-export default PokemonFormModal;
+export default PokemonDetailsForm;

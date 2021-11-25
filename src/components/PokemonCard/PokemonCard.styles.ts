@@ -12,6 +12,7 @@ export const PokemonCard = styled(Card)({
   alignItems: "center",
   justifyContent: "space-between",
   padding: "0 0 20px",
+  cursor: "pointer",
 
   "&:hover": {
     img: {
